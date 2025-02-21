@@ -17,17 +17,21 @@ find_package(glfw3 REQUIRED)
 set(OpenGL_GL_PREFERENCE GLVND)
 find_package(OpenGL REQUIRED)
 find_package(imgui REQUIRED)
+find_package(implot REQUIRED)
+find_package(glfw3 REQUIRED)
+
+
+
 
 ## Create main executable
 add_executable(ImGui-GLFW-OpenGL3)
 
+target_link_libraries(ImGui-GLFW-OpenGL3 PRIVATE imgui::imgui implot::implot glfw)
 target_include_directories(
 	ImGui-GLFW-OpenGL3
   	PRIVATE 
 	${CMAKE_SOURCE_DIR}/
-        ${CMAKE_SOURCE_DIR}/implot
-        ${CMAKE_SOURCE_DIR}/imgui-knobs
-        ${CMAKE_SOURCE_DIR}/imspinner
+
 )
 
 IF (WIN32)
@@ -41,11 +45,6 @@ target_sources(
 	ImGui-GLFW-OpenGL3
 	PRIVATE
         ${CMAKE_SOURCE_DIR}/main.cpp
-
-        ${CMAKE_SOURCE_DIR}/implot/implot.cpp
-        ${CMAKE_SOURCE_DIR}/implot/implot_items.cpp
-        ${CMAKE_SOURCE_DIR}/implot/implot_demo.cpp
-
-        ${CMAKE_SOURCE_DIR}/imgui-knobs/imgui-knobs.cpp
+        ${CMAKE_SOURCE_DIR}/imgui_demo.cpp
 )
 

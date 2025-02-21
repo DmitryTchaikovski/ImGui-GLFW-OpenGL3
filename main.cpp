@@ -6,10 +6,10 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include "implot/implot.h"
-#include "implot/implot_internal.h"
-#include "imgui-knobs/imgui-knobs.h"
-#include "imspinner/imspinner.h"
+#include "implot.h"
+
+#include "implot_internal.h"
+
 
 #include <cmath>
 #include <stdio.h>
@@ -233,7 +233,7 @@ int main(int, char**)
                                         ImGuiWindowFlags_NoCollapse | 
                                         ImGuiWindowFlags_MenuBar |
                                         ImGuiWindowFlags_DockNodeHost;
-        ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
+        ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
         if (show_demo_window) {
@@ -254,7 +254,6 @@ int main(int, char**)
             ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
             ImGui::Checkbox("Playground", &show_playground_window);
             ImGui::Checkbox("Plot Window", &show_plot_window);
-            ImGui::Checkbox("Knob Window", &show_knob_window);
 
             ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
             ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
@@ -281,84 +280,6 @@ int main(int, char**)
             ImGui::End();
         }
 
-        if (show_knob_window)
-        {
-            ImGui::Begin("Knob Demo!");
-            /** ImGuiKnobVariant_Tick,
-                ImGuiKnobVariant_Dot,
-                ImGuiKnobVariant_Wiper,
-                ImGuiKnobVariant_WiperOnly,
-                ImGuiKnobVariant_WiperDot,
-                ImGuiKnobVariant_Stepped,
-                ImGuiKnobVariant_Space
-             **/
-            ImGui::BeginGroup();
-            if (ImGuiKnobs::Knob("Volume", &knob_value, -6.0f, 6.0f, 0.1f, "%.1fdB", ImGuiKnobVariant_Tick, 100)) {
-                // value was changed
-            }
-            ImGui::SameLine();
-            if (ImGuiKnobs::Knob("Volume", &knob_value, -6.0f, 6.0f, 0.1f, "%.1fdB", ImGuiKnobVariant_Dot, 100)) {
-                // value was changed
-            }
-            ImGui::SameLine();
-            if (ImGuiKnobs::Knob("Volume", &knob_value, -6.0f, 6.0f, 0.1f, "%.1fdB", ImGuiKnobVariant_Wiper, 100)) {
-                // value was changed
-            }
-            ImGui::SameLine();
-            if (ImGuiKnobs::Knob("Volume", &knob_value, -6.0f, 6.0f, 0.1f, "%.1fdB", ImGuiKnobVariant_WiperOnly, 100)) {
-                // value was changed
-            }
-            ImGui::SameLine();
-            if (ImGuiKnobs::Knob("Volume", &knob_value, -6.0f, 6.0f, 0.1f, "%.1fdB", ImGuiKnobVariant_WiperDot, 100)) {
-                // value was changed
-            }
-            ImGui::SameLine();
-            if (ImGuiKnobs::Knob("Volume", &knob_value, -6.0f, 6.0f, 0.1f, "%.1fdB", ImGuiKnobVariant_Stepped, 100)) {
-                // value was changed
-            }
-            ImGui::SameLine();
-            if (ImGuiKnobs::Knob("Volume", &knob_value, -6.0f, 6.0f, 0.1f, "%.1fdB", ImGuiKnobVariant_Space, 100)) {
-                // value was changed
-            }
-
-            // Simple progress loader/spinner
-            ImGui::Text("Loading %c", "|/-\\"[(int)(ImGui::GetTime() / 0.05f) & 3]);
-
-            // Spinners- https://github.com/dalerank/imspinner
-            // ImSpinner::Spinner
-
-            ImDrawList* draw_list = ImGui::GetWindowDrawList();
-            auto screen_pos = ImGui::GetCursorScreenPos();
-            float radius = 50.0;
-
-
-            //if (angle > 360) angle = 0;
-            midpoint = { screen_pos[0] + radius ,screen_pos[1] + radius*2  };
-            ImGui::SliderFloat("##float", &angle, 0.0f, 360.0f);
-
-            /* Drawing a circle using Trigonometry for fun */
-            point_on_circle[0] = midpoint[0] + r * cosf(to_radian(angle));
-            point_on_circle[1] = midpoint[1] + r * sinf(to_radian(angle));
-            (angle > 359)? angle=0:angle++;
-            
-            // Outline - BLUE
-            draw_list->AddCircle(midpoint, 50, ImGui::GetColorU32(IM_COL32(0, 0, 255, 255)), 0, 10);
-
-            // Small filled circle for midpoint
-            draw_list->AddCircleFilled(midpoint, 5, ImGui::GetColorU32(IM_COL32(255, 0, 255, 255)), 0);
-
-            // Small filled circle on the above circular path
-            draw_list->AddCircleFilled(point_on_circle, 3, ImGui::GetColorU32(IM_COL32(255, 0, 0, 255)), 0);
-
-            // Line starting from midpoint to circumference of the circle
-            draw_list->AddLine(midpoint,point_on_circle,ImGui::GetColorU32(IM_COL32(255, 0, 0, 255)), 2);
-
-            ImGui::EndGroup();
-            
-            ImGui::End();
-
-            
-        }
 
         // Rendering
         ImGui::Render();

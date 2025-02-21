@@ -74,7 +74,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>C:\src\github\ImGui-GLFW-OpenGL3-v4\vcpkg_installed\x64-windows\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
@@ -106,8 +106,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
-      <AdditionalDependencies>opengl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>imgui.lib;implot.lib;glfw3dll.lib;opengl32.lib;gdi32.lib;user32.lib;shell32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\src\github\ImGui-GLFW-OpenGL3-v4\vcpkg_installed\x64-windows\bin;C:\src\github\ImGui-GLFW-OpenGL3-v4\vcpkg_installed\x64-windows\debug\bin;C:\src\github\ImGui-GLFW-OpenGL3-v4\vcpkg_installed\x64-windows\debug\lib;C:\src\github\ImGui-GLFW-OpenGL3-v4\vcpkg_installed\x64-windows\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <ProjectReference>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -144,18 +148,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="imgui-knobs\imgui-knobs.cpp" />
-    <ClCompile Include="implot\implot.cpp" />
-    <ClCompile Include="implot\implot_demo.cpp" />
-    <ClCompile Include="implot\implot_items.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="imgui_demo.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="imgui-knobs\imgui-knobs.h" />
-    <ClInclude Include="implot\implot.h" />
-    <ClInclude Include="implot\implot_internal.h" />
-    <ClInclude Include="imspinner\imspinner.h" />
-  </ItemGroup>
+
+
   <ItemGroup>
     <None Include="README.md" />
   </ItemGroup>
