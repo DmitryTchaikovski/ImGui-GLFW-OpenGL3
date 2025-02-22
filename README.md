@@ -31,6 +31,19 @@ Install dependencies using [vcpkg - (VC++ Package Manager)](https://vcpkg.io/en/
 We are ready to open the project in Visual Studio and Run too!  
 Use `Open Folder` option in Visual Studio to use `CMake` support.
 
+### Possible vcpkg Issues
+Visual studio installed vcpkg may be older and causing issues with msys2-mingw-w64-x86_64 build errors trying to fetch and older version of the package that is no longer stored/publishes on their repo:https://repo.msys2.org/mingw/mingw32/
+
+
+Visual Studio 2022 vcpkg installed in: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\vcpkg
+vckpg managed through visual studio stored in C:\Users\USERNAME\AppData\Local\vcpkg
+
+To debug vcpkg issues use:
+``` vcpkg install --debug```
+
+``` vcpkg install --dry-run```
+
+
 
 ### On Linux/WSL2
 Install dependencies using [vcpkg - (VC++ Package Manager)](https://vcpkg.io/en/index.html) 
